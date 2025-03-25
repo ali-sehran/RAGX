@@ -1,23 +1,16 @@
 pipeline {
     agent any
     stages {
-        stage('Deploy') {
+        stage('Approval') {
             steps {
-                script {
-                    def deployEnv = input(
-                        id: 'deployInput',
-                        message: 'Approve Deployment and select the target environment:',
-                        parameters: [
-                            choice(
-                                name: 'Environment',
-                                choices: ['Development', 'Staging', 'Production'],
-                                description: 'Select the deployment environment'
-                            )
-                        ]
-                    )
-                    echo "Deploying to the ${deployEnv} environment."
-                }
-                // Place your deployment steps here.
+                // This input step will pause the pipeline and display a "Proceed" button.
+                input message: 'Click "Proceed" to continue:', ok: 'Proceed'
+                echo 'Continuing with the pipeline...'
+            }
+        }
+        stage('Next Stage') {
+            steps {
+                echo 'This stage runs after the approval.'
             }
         }
     }
