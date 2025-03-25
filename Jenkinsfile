@@ -2,8 +2,8 @@ pipeline {
     agent any
     stages {
         stage('Approval') {
+            agent none // Do not allocate an executor here
             steps {
-                // This input step will pause the pipeline and display a "Proceed" button.
                 input message: 'Click "Proceed" to continue:', ok: 'Proceed'
                 echo 'Continuing with the pipeline...'
             }
