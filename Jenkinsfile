@@ -1,16 +1,17 @@
 pipeline {
     agent any
-
     stages {
-        stage('Input') {
+        stage('Approval') {
             steps {
-                input('Do you want to proceed?')
+                script {
+                    def userInput = input message: 'Click "Proceed" to continue:', ok: 'Proceed'
+                    echo "Response recorded: User selected '${userInput}'"
+                }
             }
         }
-
-        stage('If Proceed is clicked') {
+        stage('Next Stage') {
             steps {
-                print('hello')
+                echo 'This stage runs after the approval.'
             }
         }
     }
