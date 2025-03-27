@@ -1,17 +1,23 @@
 pipeline {
     agent any
     stages {
-        stage('Approval') {
+        stage('User Input URL') {
             steps {
                 script {
-                    def userInput = input message: 'Click "Proceed" to continue:', ok: 'Proceed'
-                    echo "Response recorded: User selected '${userInput}'"
+                    def userUrl = input(
+                        id: 'urlInput', message: 'Enter the URL to proceed:', parameters: [
+                            string(defaultValue: 'http://example.com', description: 'Provide a URL', name: 'URL')
+                        ]
+                    )
+                    echo "User entered URL: ${userUrl}"
                 }
             }
         }
-        stage('Next Stage') {
+
+        stage('Use URL') {
             steps {
-                echo 'This stage runs after the approval.'
+                echo 'This stage runs after user input.'
+                // You can use the URL here if needed
             }
         }
     }
